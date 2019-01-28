@@ -1,3 +1,16 @@
+var frameNo = 0;
+
+window.requestAnimFrame = (function(){
+  return  window.requestAnimationFrame       || 
+          window.webkitRequestAnimationFrame || 
+          window.mozRequestAnimationFrame    || 
+          window.oRequestAnimationFrame      || 
+          window.msRequestAnimationFrame     || 
+          function( callback ){
+            window.setTimeout(callback, 1000 / 60);
+          };
+})();
+
 var POP = {
     WIDTH: 320, 
     HEIGHT:  480, 
@@ -34,25 +47,45 @@ var POP = {
 
         // listen for touches
         window.addEventListener('touchstart', function(e) {
-            e.preventDefault();
+            // e.preventDefault();
             // just the first touch is considered
             POP.Input.set(e.touches[0]);
         }, false);
         window.addEventListener('touchmove', function(e) {
             //Prevents zoom or scrolling
-            e.preventDefault();
-        }, false);
-        window.addEventListener('touchend', function(e) {
-            // as above
             // e.preventDefault();
         }, false);
-        // POP.Draw.clear();
-        // POP.Draw.rect(120,120,150,150, 'green');
-        // POP.Draw.circle(100, 100, 50, 'rgba(255,0,0,0.5)');
-        // POP.Draw.text('Hello World', 100, 100, 10, '#000');
-        
+        window.addEventListener('touchend', function(e) {
+            // e.preventDefault();
+        }, false);
+         
 
+        POP.loop();
     },
+
+    //GAME LOOP FUNCTIONS
+    
+    update: function() {
+        frameNo+=1;
+    },
+
+    render: function() {
+
+        if(frameNo == 10){
+            POP.Draw.clear();
+            frameNo = 0; 
+        }
+    },
+
+    loop: function() {
+
+        requestAnimFrame( POP.loop );
+
+        POP.update();
+        POP.render();
+    },
+
+    //GAME LOOP ENDS
 
     resize: function() {
 
