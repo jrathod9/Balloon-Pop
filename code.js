@@ -1,4 +1,14 @@
 var frameNo = 0;
+var Balloon = new Image();
+
+Balloon.src = 'Assets/balloon.png';
+var curr;
+var position = function(x,y,vx,vy){
+    this.x = x;
+    this.y = y;
+    this.vx = vx;
+    this.vy = vy;
+}
 
 window.requestAnimFrame = (function(){
   return  window.requestAnimationFrame       || 
@@ -38,7 +48,15 @@ var POP = {
             true : false;
 
         POP.resize();
+         
+        curr = new position(Math.random()*20 , 500 , 0, -2);  //Math.random()*POP.ctx.width , POP.ctx.height + 10 , 0, -5
 
+        POP.loop();
+    },
+
+    //GAME LOOP FUNCTIONS
+    
+    update: function() {
         // listen for clicks
         window.addEventListener('click', function(e) {
             e.preventDefault();
@@ -58,23 +76,24 @@ var POP = {
         window.addEventListener('touchend', function(e) {
             e.preventDefault();
         }, false);
-         
 
-        POP.loop();
+        curr.x += curr.vx;
+        curr.y += curr.vy;
+        
+        // frameNo+=1;
     },
 
-    //GAME LOOP FUNCTIONS
-    
-    update: function() {
-        frameNo+=1;
-    },
+    //TO CHANGE 
 
     render: function() {
-
-        if(frameNo == 10){
-            POP.Draw.clear();
-            frameNo = 0; 
-        }
+        // POP.Draw.clear();
+        // POP.Draw.circle(this.x, this.y, 10, 'red'); 
+        POP.Draw.drawBalloon(curr.x,curr.y);
+        // if(frameNo == 100){
+        //     POP.Draw.clear();
+        //     frameNo = 0;
+        //     console.log(curr); 
+        // }
     },
 
     loop: function() {
@@ -138,6 +157,10 @@ POP.Draw = {
         POP.ctx.font = 'bold '+size+'px Monospace';
         POP.ctx.fillStyle = col;
         POP.ctx.fillText(string, x, y);
+    },
+
+    drawBalloon: function(xpos,ypos){
+        POP.ctx.drawImage(Balloon,xpos,ypos,50,50);
     }
 
 };
