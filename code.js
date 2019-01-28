@@ -1,15 +1,15 @@
 var frameNo = 0;
 
-// window.requestAnimFrame = (function(){
-//   return  window.requestAnimationFrame       || 
-//           window.webkitRequestAnimationFrame || 
-//           window.mozRequestAnimationFrame    || 
-//           window.oRequestAnimationFrame      || 
-//           window.msRequestAnimationFrame     || 
-//           function( callback ){
-//             window.setTimeout(callback, 1000 / 60);
-//           };
-// })();
+window.requestAnimFrame = (function(){
+  return  window.requestAnimationFrame       || 
+          window.webkitRequestAnimationFrame || 
+          window.mozRequestAnimationFrame    || 
+          window.oRequestAnimationFrame      || 
+          window.msRequestAnimationFrame     || 
+          function( callback ){
+            window.setTimeout(callback, 1000 / 60);
+          };
+})();
 
 var POP = {
     WIDTH: 320, 
@@ -79,10 +79,9 @@ var POP = {
 
     loop: function() {
 
-        requestAnimationFrame(POP.loop);
-
         POP.update();
         POP.render();
+        requestAnimFrame(POP.loop);
     },
 
     //GAME LOOP ENDS
