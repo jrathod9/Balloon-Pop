@@ -47,16 +47,16 @@ var POP = {
 
         // listen for touches
         window.addEventListener('touchstart', function(e) {
-            // e.preventDefault();
+            e.preventDefault();
             // just the first touch is considered
             POP.Input.set(e.touches[0]);
         }, false);
         window.addEventListener('touchmove', function(e) {
             //Prevents zoom or scrolling
-            // e.preventDefault();
+            e.preventDefault();
         }, false);
         window.addEventListener('touchend', function(e) {
-            // e.preventDefault();
+            e.preventDefault();
         }, false);
          
 
