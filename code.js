@@ -1,4 +1,3 @@
-// namespace our game
 var POP = {
     WIDTH: 320, 
     HEIGHT:  480, 
@@ -10,32 +9,21 @@ var POP = {
 
     init: function() {
 
-        // the proportion of width to height
         POP.RATIO = POP.WIDTH / POP.HEIGHT;
-        // these will change when the screen is resized
+        // change on screen resize
         POP.currentWidth = POP.WIDTH;
         POP.currentHeight = POP.HEIGHT;
-        // this is our canvas element
         POP.canvas = document.getElementsByTagName('canvas')[0];
-        // setting this is important
-        // otherwise the browser will
-        // default to 320 x 200
         POP.canvas.width = POP.WIDTH;
         POP.canvas.height = POP.HEIGHT;
-        // the canvas context enables us to 
-        // interact with the canvas api
         POP.ctx = POP.canvas.getContext('2d');
 
-        // we need to sniff out Android and iOS
-        // so that we can hide the address bar in
-        // our resize function
+        //  hide the address bar in our resize function
         POP.ua = navigator.userAgent.toLowerCase();
         POP.android = POP.ua.indexOf('android') > -1 ? true : false;
         POP.ios = ( POP.ua.indexOf('iphone') > -1 || POP.ua.indexOf('ipad') > -1  ) ? 
             true : false;
 
-
-        // we're ready to resize
         POP.resize();
 
         // listen for clicks
@@ -47,16 +35,11 @@ var POP = {
         // listen for touches
         window.addEventListener('touchstart', function(e) {
             e.preventDefault();
-            // the event object has an array
-            // named touches; we just want
-            // the first touch
+            // just the first touch is considered
             POP.Input.set(e.touches[0]);
         }, false);
         window.addEventListener('touchmove', function(e) {
-            // we're not interested in this,
-            // but prevent default behaviour
-            // so the screen doesn't scroll
-            // or zoom
+            //Prevents zoom or scrolling
             e.preventDefault();
         }, false);
         window.addEventListener('touchend', function(e) {
@@ -73,34 +56,24 @@ var POP = {
     resize: function() {
 
         POP.currentHeight = window.innerHeight;
-        // resize the width in proportion
-        // to the new height
+        // resize the width in proportion to the new height
         POP.currentWidth = POP.currentHeight * POP.RATIO;
 
-        // this will create some extra space on the
-        // page, allowing us to scroll past
-        // the address bar, thus hiding it.
         if (POP.android || POP.ios) {
             document.body.style.height = (window.innerHeight + 50) + 'px';
         }
 
         // set the new canvas style width and height
-        // note: our canvas is still 320 x 480, but
-        // we're essentially scaling it with CSS
         POP.canvas.style.width = POP.currentWidth + 'px';
         POP.canvas.style.height = POP.currentHeight + 'px';
 
 
-        // this will create some extra space on the
-        // page, enabling us to scroll past
-        // the address bar, thus hiding it.
+        // enabling us to scroll past the address bar, thus hiding it.
         if (POP.android || POP.ios) {
             document.body.style.height = (window.innerHeight + 50) + 'px';
         }
 
-        // we use a timeout here because some mobile
-        // browsers don't fire if there is not
-        // a short delay
+        // some mobile browsers don't fire if there is not a short delay, thus time delay
         window.setTimeout(function() {
                 window.scrollTo(0,1);
         }, 1);
@@ -108,8 +81,7 @@ var POP = {
 
 };
 
-// abstracts various canvas operations into
-// standalone functions
+
 POP.Draw = {
 
     clear: function() {
@@ -138,8 +110,6 @@ POP.Draw = {
 };
 
 
-// + add this at the bottom of your code,
-// before the window.addEventListeners
 POP.Input = {
 
     x: 0,
