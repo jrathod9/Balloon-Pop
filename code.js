@@ -50,6 +50,7 @@ var POP = {
         // POP.Draw.rect(120,120,150,150, 'green');
         // POP.Draw.circle(100, 100, 50, 'rgba(255,0,0,0.5)');
         // POP.Draw.text('Hello World', 100, 100, 10, '#000');
+        
 
     },
 
@@ -120,6 +121,19 @@ POP.Input = {
         this.x = data.pageX;
         this.y = data.pageY;
         this.tapped = true; 
+
+        var offsetTop = POP.canvas.offsetTop,
+        offsetLeft = POP.canvas.offsetLeft;
+
+        this.x = data.pageX - offsetLeft;
+        this.y = data.pageY - offsetTop;
+
+        var offsetTop = POP.canvas.offsetTop,
+        offsetLeft = POP.canvas.offsetLeft;
+        scale = POP.currentWidth / POP.WIDTH;
+
+        this.x = ( data.pageX - offsetLeft ) / scale;
+        this.y = ( data.pageY - offsetTop ) / scale;
 
         POP.Draw.circle(this.x, this.y, 10, 'red');
     }
